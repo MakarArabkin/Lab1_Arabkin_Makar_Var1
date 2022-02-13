@@ -112,16 +112,17 @@ namespace UnitTest1
 			lst.push_back(1);
 			Assert::IsTrue(lst.isEmpty() == false);
 		}
-		TEST_METHOD(Reverse)
+		TEST_METHOD(Push_front_list)
 		{
-			int c_Size = lst.GetSize();
-			lst.reverse();
-			Assert::IsTrue(lst.GetSize() == c_Size);
-			lst.push_back(1);
-			lst.push_back(2);
-			lst.push_back(3);
-			lst.reverse();
-			Assert::IsTrue(lst.at(0) == 3 && lst.at(1) == 2 && lst.at(2) == 1 && lst.GetSize() == 3);
+			List lst2;
+			lst.push_back(6);
+			lst.push_back(6);
+			lst.push_back(6);
+			lst2.push_back(1);
+			lst2.push_back(2);
+			lst2.push_back(3);
+			lst.push_front(lst2);
+			Assert::IsTrue(lst.at(0) == 1 && lst.at(1) == 2 && lst.at(2) == 3);
 		}
 
 	};

@@ -16,9 +16,9 @@ public:
 	void remove(int index);//Deleting an element with the specified index
 	void insert(int index, int data_);//Inserting a new element into the list before the specified one
 	void set(int index, int data_);//Replacing an element by index with the transmitted element
-	void reverse();//Reverses the order of the elements in the list
 	void clear();//Deleting all list elements
 	int at(int index);//Getting an element by index
+	void push_front(const List& data_);
 	friend ostream& operator<< (ostream& out, const List& data_);//Operator overload <<
 
 private:
@@ -171,7 +171,7 @@ void List::insert(int index, int data_)//Implementation of element insertion
 		if (index == 0)this->push_front(data_);
 		else
 		{
-			while (i = index - 1)
+			while (i == index - 2)
 			{
 				p = p->pNext;
 				i++;
@@ -211,24 +211,7 @@ void List::set(int index, int data_)//Implementation of replacing an element by 
 		}
 	}
 }
-void List::reverse()//Implementation of changing the order of elements in the list to reverse
-{
-	if (isEmpty()) return;
-	else
-	{
-		Node* p = head;
-		while (p != nullptr)
-		{
-			this->push_front(p->data);
-			p = p->pNext;
-		}
-		int c_Size = Size;
-		for (int i = 0; i < (c_Size / 2); i++)
-		{
-			this->pop_back();
-		}
-	}
-}
+
 void List::clear()//Implementation of deleting all list elements
 {
 	if (isEmpty()) return;
@@ -265,6 +248,16 @@ int List::at(int index)//Implementation of returning the value of an element by 
 	{
 		cerr << "Invalid index value\n";
 		return -1;
+	}
+}
+
+void List::push_front(const List& data_) //Inserting a list at the begginnig of another
+{
+	Node* p_dop = data_.head;
+	for(int i = 0; i < data_.Size; i++)
+	{	
+		this->insert(i,p_dop->data);
+		p_dop = p_dop->pNext;
 	}
 }
 ostream& operator<<(ostream& out, const List& data_)//Implementation of operator overload <<
@@ -314,10 +307,14 @@ int main()
 	cout << "Let's get the value of the second element: " << lst.at(1) << endl;
 	cout << "Completely cleaning up the list\n";
 	lst.clear();
-	cout << "Let's fill the list with five elements in order, starting from zero\n";
-	for (int i = 0; i < 5; i++)lst.push_back(i);
-	cout << lst;
-	cout << "Now reverse the list\n";
-	lst.reverse();
+	cout << "Let's insert one list into another\n";
+	List lst2;
+	lst.push_back(6);
+	lst.push_back(6);
+	lst.push_back(6);
+	lst2.push_back(1);
+	lst2.push_back(2);
+	lst2.push_back(3);
+	lst.push_front(lst2);
 	cout << lst;
 }
